@@ -355,10 +355,8 @@ impl Signal {
             &format!("{struct_name_caps}_{method_name_caps}_PUBLISHER"),
             method.span(),
         );
-        let subscriber_struct_name = Ident::new(
-            &format!("{struct_name}{method_name_pascal}"),
-            method.span(),
-        );
+        let subscriber_struct_name =
+            Ident::new(&format!("{struct_name}{method_name_pascal}"), method.span());
         let args_struct_name = Ident::new(
             &format!("{struct_name}{method_name_pascal}Args"),
             method.span(),

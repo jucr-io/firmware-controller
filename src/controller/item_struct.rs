@@ -198,10 +198,8 @@ impl PublishedField {
         );
 
         let field_name_pascal = snake_to_pascal_case(&field_name_str);
-        let subscriber_struct_name = Ident::new(
-            &format!("{struct_name}{field_name_pascal}"),
-            field.span(),
-        );
+        let subscriber_struct_name =
+            Ident::new(&format!("{struct_name}{field_name_pascal}"), field.span());
         let change_struct_name = Ident::new(
             &format!("{struct_name}{field_name_pascal}Changed"),
             field.span(),
@@ -210,8 +208,7 @@ impl PublishedField {
         let max_subscribers = super::BROADCAST_MAX_SUBSCRIBERS;
         let max_publishers = super::BROADCAST_MAX_PUBLISHERS;
 
-        let publisher_name =
-            Ident::new(&format!("{field_name_str}_publisher"), field.span());
+        let publisher_name = Ident::new(&format!("{field_name_str}_publisher"), field.span());
         let publisher_field_declaration = quote! {
             #publisher_name:
                 embassy_sync::pubsub::Publisher<

@@ -17,9 +17,6 @@ heapless = { version = "0.7", default-features = false }
 futures = { version = "0.3", default-features = false, features = [
     "async-await",
 ] }
-lazy_static = { version = "1.5.0", default-features = false, features = [
-    "spin_no_std",
-] }
 embassy-sync = { git = "https://github.com/jucr-io/embassy/" }
 embassy-executor = { git = "https://github.com/jucr-io/embassy/", features = [
     "task-arena-size-32768",

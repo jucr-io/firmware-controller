@@ -376,17 +376,15 @@ impl Signal {
                     #max_publishers,
                 > = embassy_sync::pubsub::PubSubChannel::new();
 
-            lazy_static::lazy_static! {
-                static ref #args_publisher_name: embassy_sync::pubsub::publisher::Publisher<
-                    'static,
-                    embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex,
-                    #args_struct_name,
-                    #capacity,
-                    #max_subscribers,
-                    #max_publishers,
-                    // Safety: The publisher is only initialized once.
-                > = embassy_sync::pubsub::PubSubChannel::publisher(&#args_channel_name).unwrap();
-            }
+            static #args_publisher_name: embassy_sync::once_lock::OnceLock<embassy_sync::pubsub::publisher::Publisher<
+                'static,
+                embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex,
+                #args_struct_name,
+                #capacity,
+                #max_subscribers,
+                #max_publishers,
+                // Safety: The publisher is only initialized once.
+            >> = embassy_sync::once_lock::OnceLock::new();
 
             #[derive(Debug, Clone)]
             pub struct #args_struct_name {
@@ -426,8 +424,12 @@ impl Signal {
         };
 
         method.block = parse_quote!({
-            embassy_sync::pubsub::publisher::Pub::publish(
+            let publisher = embassy_sync::once_lock::OnceLock::get_or_init(
                 &#args_publisher_name,
+                // Safety: The publisher is only initialized once.
+                || embassy_sync::pubsub::PubSubChannel::publisher(&#args_channel_name).unwrap());
+            embassy_sync::pubsub::publisher::Pub::publish(
+                publisher,
                 #args_struct_name { #(#names),* },
             ).await;
         });

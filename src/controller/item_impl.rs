@@ -212,11 +212,11 @@ impl ProxiedMethodArgs<'_> {
         let method_name_caps = method_name_str.to_uppercase();
         let input_channel_name = Ident::new(
             &format!("{struct_name_caps}_{method_name_caps}_INPUT_CHANNEL"),
-            self.method.span().into(),
+            self.method.span(),
         );
         let output_channel_name = Ident::new(
             &format!("{struct_name_caps}_{method_name_caps}_OUTPUT_CHANNEL"),
-            self.method.span().into(),
+            self.method.span(),
         );
         let capacity = super::ALL_CHANNEL_CAPACITY;
         let args_channel_declarations = quote! {
@@ -251,9 +251,9 @@ impl ProxiedMethodArgs<'_> {
         let method_name = &self.method.sig.ident;
         let method_name_str = method_name.to_string();
         let input_channel_rx_name =
-            Ident::new(&format!("{method_name_str}_rx"), self.method.span().into());
+            Ident::new(&format!("{method_name_str}_rx"), self.method.span());
         let output_channel_tx_name =
-            Ident::new(&format!("{method_name_str}_tx"), self.method.span().into());
+            Ident::new(&format!("{method_name_str}_tx"), self.method.span());
         let args_channels_rx_tx = quote! {
             let #input_channel_rx_name = embassy_sync::channel::Channel::receiver(&#input_channel_name);
             let #output_channel_tx_name = embassy_sync::channel::Channel::sender(&#output_channel_name);
@@ -286,9 +286,9 @@ impl ProxiedMethodArgs<'_> {
         };
         let method_name_str = method_name.to_string();
         let input_channel_tx_name =
-            Ident::new(&format!("{method_name_str}_tx"), self.method.span().into());
+            Ident::new(&format!("{method_name_str}_tx"), self.method.span());
         let output_channel_rx_name =
-            Ident::new(&format!("{method_name_str}_rx"), self.method.span().into());
+            Ident::new(&format!("{method_name_str}_rx"), self.method.span());
         let mut method = self.method.clone();
 
         method.block = parse_quote!({
@@ -349,19 +349,19 @@ impl Signal {
         let method_name_pascal = snake_to_pascal_case(&method_name_str);
         let args_channel_name = Ident::new(
             &format!("{struct_name_caps}_{method_name_caps}_CHANNEL"),
-            method.span().into(),
+            method.span(),
         );
         let args_publisher_name = Ident::new(
             &format!("{struct_name_caps}_{method_name_caps}_PUBLISHER"),
-            method.span().into(),
+            method.span(),
         );
         let subscriber_struct_name = Ident::new(
             &format!("{struct_name}{method_name_pascal}"),
-            method.span().into(),
+            method.span(),
         );
         let args_struct_name = Ident::new(
             &format!("{struct_name}{method_name_pascal}Args"),
-            method.span().into(),
+            method.span(),
         );
 
         let capacity = super::ALL_CHANNEL_CAPACITY;
@@ -466,7 +466,7 @@ fn remove_signal_attr(method: &mut ImplItemFn) -> syn::Result<()> {
                 return Some(Ok(attr));
             }
 
-            match attr.parse_nested_meta(|meta| {
+            let res = attr.parse_nested_meta(|meta| {
                 if !meta.path.is_ident("signal") {
                     let e = format!(
                         "expected `signal` attribute, found `{}`",
@@ -477,8 +477,9 @@ fn remove_signal_attr(method: &mut ImplItemFn) -> syn::Result<()> {
                 }
 
                 Ok(())
-            }) {
-                Err(e) => return Some(Err(e)),
+            });
+            match res {
+                Err(e) => Some(Err(e)),
                 Ok(()) => None,
             }
         })

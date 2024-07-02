@@ -13,11 +13,11 @@ pub fn controller(attr: TokenStream, item: TokenStream) -> TokenStream {
 
     if let Ok(input) = syn::parse::<ItemStruct>(item.clone()) {
         controller::item_struct::expand(input)
-            .unwrap_or_else(|e| e.to_compile_error().into())
+            .unwrap_or_else(|e| e.to_compile_error())
             .into()
     } else if let Ok(input) = syn::parse::<ItemImpl>(item) {
         controller::item_impl::expand(input)
-            .unwrap_or_else(|e| e.to_compile_error().into())
+            .unwrap_or_else(|e| e.to_compile_error())
             .into()
     } else {
         panic!("Expected struct or trait")

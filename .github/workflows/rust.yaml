@@ -1,0 +1,35 @@
+name: Rust Linting, Building & Testing
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      RUST_LOG: trace
+      RUST_BACKTRACE: full
+      RUSTFLAGS: -D warnings
+    steps:
+      - name: Test
+        uses: jucr-io/github-reusable-workflows/.github/actions/cargo-test@main
+
+  fmt:
+    runs-on: ubuntu-latest
+    env:
+      RUSTFLAGS: -D warnings
+    steps:
+      - uses: jucr-io/github-reusable-workflows/.github/actions/cargo-fmt@main
+
+  clippy:
+    runs-on: ubuntu-latest
+    env:
+      RUSTFLAGS: -D warnings
+    steps:
+      - uses: jucr-io/github-reusable-workflows/.github/actions/cargo-clippy@main

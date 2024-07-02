@@ -120,8 +120,7 @@ dependencies = [
 [[package]]
 name = "embassy-executor"
 version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec648daedd2143466eff4b3e8002024f9f6c1de4ab7666bb679688752624c925"
+source = "git+https://github.com/jucr-io/embassy/#6f21d5e478292352df5cabcc1aa302ae7f8998a3"
 dependencies = [
  "critical-section",
  "defmt",
@@ -134,8 +133,7 @@ dependencies = [
 [[package]]
 name = "embassy-executor-macros"
 version = "0.4.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad454accf80050e9cf7a51e994132ba0e56286b31f9317b68703897c328c59b5"
+source = "git+https://github.com/jucr-io/embassy/#6f21d5e478292352df5cabcc1aa302ae7f8998a3"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -145,9 +143,8 @@ dependencies = [
 
 [[package]]
 name = "embassy-sync"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dd938f25c0798db4280fcd8026bf4c2f48789aebf8f77b6e5cf8a7693ba114ec"
+version = "0.6.0"
+source = "git+https://github.com/jucr-io/embassy/#6f21d5e478292352df5cabcc1aa302ae7f8998a3"
 dependencies = [
  "cfg-if",
  "critical-section",
@@ -159,8 +156,7 @@ dependencies = [
 [[package]]
 name = "embassy-time"
 version = "0.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "274c019608a9004aed3cafc871e2a3c87ce9351d537dcaab4cc5db184d4a04b1"
+source = "git+https://github.com/jucr-io/embassy/#6f21d5e478292352df5cabcc1aa302ae7f8998a3"
 dependencies = [
  "cfg-if",
  "critical-section",
@@ -178,8 +174,7 @@ dependencies = [
 [[package]]
 name = "embassy-time-driver"
 version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e0c214077aaa9206958b16411c157961fb7990d4ea628120a78d1a5a28aed24"
+source = "git+https://github.com/jucr-io/embassy/#6f21d5e478292352df5cabcc1aa302ae7f8998a3"
 dependencies = [
  "document-features",
 ]
@@ -187,8 +182,7 @@ dependencies = [
 [[package]]
 name = "embassy-time-queue-driver"
 version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f1177859559ebf42cd24ae7ba8fe6ee707489b01d0bf471f8827b7b12dcb0bc0"
+source = "git+https://github.com/jucr-io/embassy/#6f21d5e478292352df5cabcc1aa302ae7f8998a3"
 
 [[package]]
 name = "embedded-hal"

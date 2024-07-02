@@ -153,7 +153,6 @@ The `controller` macro will generated the following for you:
 The `controller` macro assumes that you have the following dependencies in your `Cargo.toml`:
 
 * `futures` with `async-await` feature enabled.
-* `lazy_static` with either the default feature or `spin_no_std` feature enabled.
 * `embassy-sync`
 
 ## Known limitations

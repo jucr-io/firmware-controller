@@ -194,24 +194,21 @@ impl PublishedField {
         let field_name_caps = field_name_str.to_ascii_uppercase();
         let publish_channel_name = Ident::new(
             &format!("{struct_name_caps}_{field_name_caps}_CHANNEL"),
-            field.span().into(),
+            field.span(),
         );
 
         let field_name_pascal = snake_to_pascal_case(&field_name_str);
-        let subscriber_struct_name = Ident::new(
-            &format!("{struct_name}{field_name_pascal}"),
-            field.span().into(),
-        );
+        let subscriber_struct_name =
+            Ident::new(&format!("{struct_name}{field_name_pascal}"), field.span());
         let change_struct_name = Ident::new(
             &format!("{struct_name}{field_name_pascal}Changed"),
-            field.span().into(),
+            field.span(),
         );
         let capacity = super::ALL_CHANNEL_CAPACITY;
         let max_subscribers = super::BROADCAST_MAX_SUBSCRIBERS;
         let max_publishers = super::BROADCAST_MAX_PUBLISHERS;
 
-        let publisher_name =
-            Ident::new(&format!("{field_name_str}_publisher"), field.span().into());
+        let publisher_name = Ident::new(&format!("{field_name_str}_publisher"), field.span());
         let publisher_field_declaration = quote! {
             #publisher_name:
                 embassy_sync::pubsub::Publisher<
@@ -227,7 +224,7 @@ impl PublishedField {
             // We only create one publisher so we can't fail.
             #publisher_name: embassy_sync::pubsub::PubSubChannel::publisher(&#publish_channel_name).unwrap()
         };
-        let setter_name = Ident::new(&format!("set_{field_name_str}"), field.span().into());
+        let setter_name = Ident::new(&format!("set_{field_name_str}"), field.span());
         let setter = quote! {
             pub async fn #setter_name(&mut self, mut value: #ty) {
                 core::mem::swap(&mut self.#field_name, &mut value);

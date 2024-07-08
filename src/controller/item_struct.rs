@@ -233,10 +233,10 @@ impl PublishedField {
                     previous: value,
                     new: core::clone::Clone::clone(&self.#field_name),
                 };
-                embassy_sync::pubsub::publisher::Pub::publish(
+                embassy_sync::pubsub::publisher::Pub::publish_immediate(
                     &self.#publisher_name,
                     change,
-                ).await;
+                );
             }
         };
 

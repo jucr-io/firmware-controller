@@ -362,7 +362,7 @@ impl Signal {
             method.span(),
         );
 
-        let capacity = super::ALL_CHANNEL_CAPACITY;
+        let capacity = super::SIGNAL_CHANNEL_CAPACITY;
         let max_subscribers = super::BROADCAST_MAX_SUBSCRIBERS;
         let max_publishers = super::BROADCAST_MAX_PUBLISHERS;
 

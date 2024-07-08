@@ -347,11 +347,11 @@ impl Signal {
         let struct_name_caps = struct_name.to_string().to_uppercase();
         let method_name_caps = method_name_str.to_uppercase();
         let method_name_pascal = snake_to_pascal_case(&method_name_str);
-        let args_channel_name = Ident::new(
+        let signal_channel_name = Ident::new(
             &format!("{struct_name_caps}_{method_name_caps}_CHANNEL"),
             method.span(),
         );
-        let args_publisher_name = Ident::new(
+        let signal_publisher_name = Ident::new(
             &format!("{struct_name_caps}_{method_name_caps}_PUBLISHER"),
             method.span(),
         );
@@ -367,7 +367,7 @@ impl Signal {
         let max_publishers = super::BROADCAST_MAX_PUBLISHERS;
 
         let declarations = quote! {
-            static #args_channel_name:
+            static #signal_channel_name:
                 embassy_sync::pubsub::PubSubChannel<
                     embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex,
                     #args_struct_name,
@@ -376,7 +376,7 @@ impl Signal {
                     #max_publishers,
                 > = embassy_sync::pubsub::PubSubChannel::new();
 
-            static #args_publisher_name: embassy_sync::once_lock::OnceLock<embassy_sync::pubsub::publisher::Publisher<
+            static #signal_publisher_name: embassy_sync::once_lock::OnceLock<embassy_sync::pubsub::publisher::Publisher<
                 'static,
                 embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex,
                 #args_struct_name,
@@ -404,7 +404,7 @@ impl Signal {
 
             impl #subscriber_struct_name {
                 pub fn new() -> Option<Self> {
-                    embassy_sync::pubsub::PubSubChannel::subscriber(&#args_channel_name)
+                    embassy_sync::pubsub::PubSubChannel::subscriber(&#signal_channel_name)
                         .ok()
                         .map(|subscriber| Self { subscriber })
                 }
@@ -425,9 +425,9 @@ impl Signal {
 
         method.block = parse_quote!({
             let publisher = embassy_sync::once_lock::OnceLock::get_or_init(
-                &#args_publisher_name,
+                &#signal_publisher_name,
                 // Safety: The publisher is only initialized once.
-                || embassy_sync::pubsub::PubSubChannel::publisher(&#args_channel_name).unwrap());
+                || embassy_sync::pubsub::PubSubChannel::publisher(&#signal_channel_name).unwrap());
             embassy_sync::pubsub::publisher::Pub::publish(
                 publisher,
                 #args_struct_name { #(#names),* },

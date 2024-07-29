@@ -51,6 +51,7 @@ pub(crate) fn expand(mut input: ItemStruct) -> Result<TokenStream> {
         }
 
         impl #struct_name {
+            #[allow(clippy::too_many_arguments)]
             pub fn new(#(#fields),*) -> Self {
                 Self {
                     #(#field_names),*,

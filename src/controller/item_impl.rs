@@ -184,12 +184,7 @@ impl ProxiedMethodArgs<'_> {
         let in_args = MethodInputArgs::parse(method)?;
         let out_type = match &method.sig.output {
             syn::ReturnType::Type(_, ty) => quote! { #ty },
-            syn::ReturnType::Default => {
-                return Err(syn::Error::new(
-                    method.sig.ident.span(),
-                    "Expected return type in method signature",
-                ))
-            }
+            syn::ReturnType::Default => quote! { () },
         };
 
         Ok(ProxiedMethodArgs {

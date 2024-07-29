@@ -63,7 +63,11 @@ impl Controller {
         self.set_state(State::Disabled).await;
 
         Ok(())
-    }   
+    }
+
+    // Method that doesn't return anything.
+    pub async fn return_nothing(&self) {
+    }
 }
 
 #[embassy_executor::main]

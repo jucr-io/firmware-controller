@@ -258,9 +258,9 @@ impl PublishedField {
                     'static,
                     embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex,
                     #change_struct_name,
-                    1,
-                    16,
-                    1,
+                    #capacity,
+                    #max_subscribers,
+                    #max_publishers,
                 >,
             }
 

@@ -166,7 +166,7 @@ The `controller` macro assumes that you have the following dependencies in your 
   this limitation in the future. Having said that, most firmware applications will only need a
   single controller instance.
 * Method args/return type can't be reference types.
-* Methods must be async
+* Methods must be async.
 * The maximum number of subscribers state change and signal streams is 16. We plan to provide an
   attribute to make this configurable in the future.
 * The type of all published fields must implement `Clone` and `Debug`.

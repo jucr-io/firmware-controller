@@ -1,6 +1,6 @@
 # firmware-controller
 
-This crate provides a macro, [`macro@controller`] that makes it easy to write controller logic for firmware.
+This crate provides a macro named `controller` that makes it easy to write controller logic for firmware.
 
 The controller is responsible for control of all the peripherals based on commands it receives
 from other parts of the code. It also notifies peers about state changes and events via signals.

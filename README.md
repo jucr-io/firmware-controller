@@ -159,7 +159,7 @@ The `controller` macro assumes that you have the following dependencies in your 
 * `futures` with `async-await` feature enabled.
 * `embassy-sync`
 
-## Known limitations
+## Known limitations & Caveats
 
 * Currently only works as a singleton: you can create multiple instances of the controller but
   if you run them simultaneously, they'll interfere with each others' operation. We hope to remove
@@ -170,5 +170,5 @@ The `controller` macro assumes that you have the following dependencies in your 
 * The maximum number of subscribers state change and signal streams is 16. We plan to provide an
   attribute to make this configurable in the future.
 * The type of all published fields must implement `Clone` and `Debug`.
-* warning about need to continuosly poll change streams
-  * missed notification otherwise
+* The signal and published fields' streams must be continuely polled. Otherwise notifications will
+  be missed.

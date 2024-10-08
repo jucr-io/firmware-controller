@@ -5,9 +5,9 @@
 This crate provides a macro named `controller` that makes it easy to decouple interactions between
 components in a `no_std` environment.
 
-[Intro](#-intro) •
-[Usage](#-usage) •
-[Details](#-details)
+[Intro](#intro) •
+[Usage](#usage) •
+[Details](#details)
 
 </div>
 

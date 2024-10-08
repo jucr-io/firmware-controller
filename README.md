@@ -7,7 +7,7 @@ components in a `no_std` environment.
 
 [Intro](#-intro) •
 [Usage](#-usage) •
-[Internals](#-internals)
+[Details](#-details)
 
 </div>
 
@@ -139,7 +139,7 @@ async fn client() {
 }
 ```
 
-# Internals
+# Details
 
 The `controller` macro will generated the following for you:
 

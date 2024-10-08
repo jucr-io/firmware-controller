@@ -1,13 +1,25 @@
-# firmware-controller
+<div align="center">
+
+# Firmware Controller
+
+This crate provides a macro named `controller` that makes it easy to decouple interactions between components in a `no_std` environment.
+
+[Intro](#-intro) •
+[Usage](#-usage) •
+[Internals](#-internals)
+
+</div>
+
+# Intro
 
 This crate provides a macro named `controller` that makes it easy to write controller logic for firmware.
 
-The controller is responsible for control of all the peripherals based on commands it receives
-from other parts of the code. It also notifies peers about state changes and events via signals.
+The controller is responsible for control of all the peripherals based on commands it receives from other parts of the code. It also notifies peers about state changes and events via signals.
 This macro generates all the boilerplate code and client-side API for you.
 
-It's best described by an example so let's take example of a very simple firmware that controls an
-LED:
+# Usage
+
+It's best described by an example so let's take example of a very simple firmware that controls an LED:
 
 ```rust,no_run
 use firmware_controller::controller;
@@ -122,6 +134,8 @@ async fn client() {
     }
 }
 ```
+
+# Internals
 
 The `controller` macro will generated the following for you:
 

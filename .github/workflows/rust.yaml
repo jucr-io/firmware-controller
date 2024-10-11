@@ -2,34 +2,48 @@ name: Rust Linting, Building & Testing
 
 on:
   push:
-    branches: [main]
+    branches: ["main"]
   pull_request:
-    branches: [main]
+    branches: ["main"]
 
-permissions:
-  contents: read
+env:
+  CARGO_TERM_COLOR: always
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      RUST_LOG: trace
-      RUST_BACKTRACE: full
-      RUSTFLAGS: -D warnings
     steps:
-      - name: Test
-        uses: jucr-io/github-reusable-workflows/.github/actions/cargo-test@main
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
 
   fmt:
     runs-on: ubuntu-latest
-    env:
-      RUSTFLAGS: -D warnings
     steps:
-      - uses: jucr-io/github-reusable-workflows/.github/actions/cargo-fmt@main
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+          components: rustfmt
+      - uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check
 
   clippy:
     runs-on: ubuntu-latest
-    env:
-      RUSTFLAGS: -D warnings
     steps:
-      - uses: jucr-io/github-reusable-workflows/.github/actions/cargo-clippy@main
+      - uses: actions/checkout@v4
+        with:
+          toolchain: nightly
+          override: true
+          components: clippy
+      - uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: -- -D warnings

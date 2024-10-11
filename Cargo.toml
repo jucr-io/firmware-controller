@@ -4,6 +4,7 @@ description = "Controller to decouple interactions between components in a no_st
 version = "0.1.0"
 edition = "2021"
 authors = ["JUCR GmbH <engineering@jucr.com>"]
+license = "MIT"
 
 [lib]
 proc-macro = true

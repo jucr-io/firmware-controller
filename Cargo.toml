@@ -5,6 +5,7 @@ version = "0.1.0"
 edition = "2021"
 authors = ["JUCR GmbH <engineering@jucr.com>"]
 license = "MIT"
+repository = "https://github.com/jucr-io/firmware-controller/"
 
 [lib]
 proc-macro = true
